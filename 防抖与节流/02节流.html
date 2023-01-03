@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>节流</title>
+  <script src="./node_modules/lodash/lodash.js"></script>
+</head>
+<body>
+  <div>
+    <h1>我是计数器<span>0</span></h1>
+    <button>点击我加1</button>
+  </div>
+</body>
+<script>
+  //节流:在规定的间隔时间范围内不会重复触发回调，只有大于这个时间间隔才会触发回调，把频繁触发变为少量触发
+  let span = document.querySelector('span');
+  let button = document.querySelector('button');
+  let count = 0;
+  //计数器:在一秒以内,数字只能加上1
+  button.onclick = _.throttle(function(){
+    //节流:目前这个回调5s执行一次,
+    //假如这里面有很多业务代码,就可以给浏览器很多事件去解析
+      count++;
+      span.innerHTML = count;
+      console.log('执行');
+      
+   },5000)
+   //防抖:用户操作频繁 但是只执行一次 只判断你最后一次
+   //节流:用户操作频繁 但变成少量的操作 5S一次
+
+   //节流:闭包+延迟器
+
+    
+</script>
+</html>

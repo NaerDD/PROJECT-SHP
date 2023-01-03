@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>防抖</title>
+  <script src="./node_modules/lodash/lodash.js"></script>
+</head>
+<body>
+  <p>
+    请输入你想要搜索的内容:<input type="text">
+  </p>
+</body>
+<script>
+  //防抖:前面的所有的触发都被取消，最后一次执行在规定的时间之后才会触发，也就是说如果连续快速的触发 只会执行一次
+  let input = document.querySelector('input');
+  //文本发生变化立即执行
+  // input.oninput = function(){
+  //     console.log('ajax发请求');
+  //  }
+  input.oninput = _.debounce(function(){
+      console.log('ajax');
+   },1000);
+   //lodashi插件:里面封装函数的防抖与节流的业务[闭包+延迟器]
+
+   //1:lodashi函数库对外暴露_fun
+
+    // console.log(result);
+    
+   
+</script>
+</html>

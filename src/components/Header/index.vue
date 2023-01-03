@@ -84,7 +84,15 @@ export default {
       //可以的:三种写法
 
       //解决多次执行会抛出NavigationDuplicated的警告错误 我们写入一个成功的回调和一个失败的回调即可解决(指标不治本)
-      this.$router.push({name:"search",params:{keyword:this.keyword},query:{k:this.keyword.toUpperCase()}},()=>{},()=>{});
+      if(this.$route.query){
+        let location = {name:'search',params:{ keyword:this.keyword||undefined}}
+        location.query = this.$route.query;
+        this.$router.push(location);
+      }
+      // this.$router.push({name:"search",
+      // params:{keyword:this.keyword},
+      // query:{k:this.keyword.toUpperCase()}
+    // },()=>{},()=>{});
 
 
     },

@@ -1,18 +1,20 @@
 import Vue from 'vue'
 import App from './App.vue'
 //三级联动组件---全局组件
-import TypeNav from '@/pages/Home/TypeNav'
+import TypeNav from '@/components/TypeNav'
 //第一个参数 全局组件的名字 第二个参数：哪一个组件
 Vue.component(TypeNav.name,TypeNav);
-Vue.config.productionTip = false
+//引入MockServer.js---mock数据
+import '@/mock/mockServer';
 
+Vue.config.productionTip = false
 //引入路由
 import router from '@/router'
 //引入仓库
 import store from '@/store';
 //测试
-import {reqCateGoryList} from '@/api'
-reqCateGoryList();
+// import {reqCateGoryList} from '@/api'
+// reqCateGoryList();
 new Vue({
   render: h => h(App),
   //注册路由:地下的写法KV一致省略V【router小写的】
