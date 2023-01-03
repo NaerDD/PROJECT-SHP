@@ -12,7 +12,7 @@ import "nprogress/nprogress.css";
 const requests = axios.create({
   //配置对象
   //基础路径 发请求的路径都带上/api
-  baseURL:"/api",
+  baseURL:"/mock",
   //请求超时时间
   timeout:5000,
 });

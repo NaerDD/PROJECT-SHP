@@ -24,3 +24,6 @@ mock数据(模拟):如果你想mock数据 需要用到mock.js
 4)创建mockServe.js 通过mockjs插件实现模拟数据
 5)把mockServer.js文件在入口文件中引入(至少执行一次,才能模拟数据)
 
+
+5)ListContainer组件开发重点?
+cnpm i -s-save swiper@5

@@ -6,18 +6,9 @@
         <!--banner轮播-->
         <div class="swiper-container" id="mySwiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
+            <div class="swiper-slide" v-for="(carousel,index) in bannerList" :key="carousel.id">
+              <img :src="carousel.imgUrl" />
             </div>
-            <!-- <div class="swiper-slide">
-              <img src="./images/banner2.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner3.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner4.jpg" />
-            </div> -->
           </div>
           <!-- 如果需要分页器 -->
           <div class="swiper-pagination"></div>
@@ -101,7 +92,43 @@
 </template>
 
 <script>
-export default {};
+import { mapState } from 'vuex';
+import Swiper from 'swiper'
+export default {
+  name:'',
+  mounted(){
+    //派发action：通过Vuex发起ajax请求,将数据存在仓库当中
+    this.$store.dispatch('getBannerList');
+    //new Swiper语句不能放在mounted语句当中 因为dispatch当中涉及到异步语句
+    //导致v-for遍历的时候结构还没完全 因此不行
+    //放在update中检测到数据修改就变化可行 但是如果有其他的数据 变化又需要重新加载 因此也不采用
+    setTimeout(()=>{
+     var mySwiper = new Swiper ('.swiper-container', {
+    // direction: 'vertical', // 垂直切换选项 默认水平
+    loop: true, // 循环模式选项
+    // 如果需要分页器
+    pagination: {
+      el: '.swiper-pagination',
+      //点击小球切换
+      clickable:true,
+    },
+    // 如果需要前进后退按钮
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  })        
+
+    },2000)
+    
+  },
+  computed:{
+    ...mapState({
+      bannerList:state=>state.home.bannerList
+    })
+  }
+
+};
 </script>
 
 <style lang="less" scoped>
@@ -277,3 +304,9 @@ export default {};
   }
 }
 </style>
+
+
+
+//第一步:引包(相应JS|CSS)
+//第二步:页面中结构务必要有
+//第三步(页面当中务必要有结构):new Swiper实例[轮播图添加动态效果]

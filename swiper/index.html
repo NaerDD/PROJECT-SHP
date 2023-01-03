@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- 引包 -->
+  <script src="./js/swiper.min.js"></script>
+  <link rel="stylesheet" href="./css/swiper.min.css">
+  <style>
+    .swiper-container{
+      width: 600px;
+      height: 400px;
+    } 
+  </style>
+</head>
+
+<body>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">Slide 1</div>
+      <div class="swiper-slide">Slide 2</div>
+      <div class="swiper-slide">Slide 3</div>
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination"></div>
+
+    <!-- 如果需要导航按钮 -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <!-- 如果需要滚动条 -->
+    <!-- <div class="swiper-scrollbar"></div> -->
+  </div>
+</body>
+
+
+</html>
+<script>
+     //在new Swiper实例之前,页面中的结构必须得已有
+     //第一个参数 可以使字符串(querySelecter)|真实的dom节点 
+     var mySwiper = new Swiper ('.swiper-container', {
+    // direction: 'vertical', // 垂直切换选项 默认水平
+    loop: true, // 循环模式选项
+    
+    // 如果需要分页器
+    pagination: {
+      el: '.swiper-pagination',
+    },
+    
+    // 如果需要前进后退按钮
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    
+    // 如果需要滚动条
+    // scrollbar: {
+    //   el: '.swiper-scrollbar',
+    // },
+  })        
+</script>
+
+
+
+//第一步:引包(相应JS|CSS)
+//第二步:页面中结构务必要有
+//第三部(页面当中务必要有结构):new Swiper实例[轮播图添加动态效果]
