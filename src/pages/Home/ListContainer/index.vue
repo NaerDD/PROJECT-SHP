@@ -3,21 +3,8 @@
   <div class="list-container">
     <div class="sortList clearfix">
       <div class="center">
-        <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="(carousel,index) in bannerList" :key="carousel.id">
-              <img :src="carousel.imgUrl" />
-            </div>
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
+        <Carsousel :list="bannerList"/>
         </div>
-      </div>
       <div class="right">
         <div class="news">
           <h4>
@@ -87,47 +74,27 @@
           <img src="./images/ad1.png" />
         </div>
       </div>
-    </div>
+      </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import Swiper from 'swiper'
 export default {
   name:'',
   mounted(){
+    //mounted:组件挂载完毕,正常说组件结构(DOM)已经全有了
+    //为什么swiper实例在mounted当中直接不能直接书写:因为结构还没完整
+
     //派发action：通过Vuex发起ajax请求,将数据存在仓库当中
     this.$store.dispatch('getBannerList');
-    //new Swiper语句不能放在mounted语句当中 因为dispatch当中涉及到异步语句
-    //导致v-for遍历的时候结构还没完全 因此不行
-    //放在update中检测到数据修改就变化可行 但是如果有其他的数据 变化又需要重新加载 因此也不采用
-    setTimeout(()=>{
-     var mySwiper = new Swiper ('.swiper-container', {
-    // direction: 'vertical', // 垂直切换选项 默认水平
-    loop: true, // 循环模式选项
-    // 如果需要分页器
-    pagination: {
-      el: '.swiper-pagination',
-      //点击小球切换
-      clickable:true,
-    },
-    // 如果需要前进后退按钮
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-  })        
-
-    },2000)
     
   },
   computed:{
     ...mapState({
-      bannerList:state=>state.home.bannerList
+      bannerList:(state)=>state.home.bannerList,
     })
-  }
-
+  },
 };
 </script>
 
