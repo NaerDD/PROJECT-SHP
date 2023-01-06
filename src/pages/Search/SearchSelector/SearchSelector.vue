@@ -3,8 +3,11 @@
     <div class="type-wrap logo">
       <div class="fl key brand">品牌</div>
       <div class="value logos">
+        <!-- 品牌地方 -->
         <ul class="logo-list">
-          <li v-for="(trademark,index) in trademarkList" :key="trademark.tmId">{{trademark.tmName}}</li>
+          <li v-for="(trademark,index) in trademarkList" :key="trademark.tmId" @click="tradeMatkHandler(trademark)">
+            {{trademark.tmName}}
+          </li>
         </ul>
       </div>
       <div class="ext">
@@ -12,11 +15,14 @@
         <a href="javascript:void(0);">更多</a>
       </div>
     </div>
+   <!-- 平台售卖属性的地方 -->
     <div class="type-wrap" v-for="(attr,index) in attrsList" :key="attr.attrId">
+      <!-- 平台售卖属性:比如说颜色 -->
       <div class="fl key">{{attr.attrName}}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="(attrValue,index) in attr.attrValueList" :key="index">
+          <!-- 粉色 蓝色 黑色 -->
+          <li v-for="(attrValue,index) in attr.attrValueList" :key="index" @click="attrInfo(attr,attrValue)">
             <a>{{attrValue}}</a>
           </li>
         </ul>
@@ -33,6 +39,21 @@ import { mapGetters } from 'vuex';
     name: 'SearchSelector',
     computed:{
       ...mapGetters(['trademarkList','attrsList'])
+    },
+    methods:{
+      //品牌的事件处理
+      tradeMatkHandler(trademark){
+        //点击了品牌(苹果),还需要整理参数,向服务器发请求获取相应的数据进行展示
+        //父组件中发送请求 因为父组件中searchParams参数是带给服务器参数,子组件把你点击的品牌的信息,给父组件传递过去--自定义事件
+        // console.log(trademark);
+        this.$emit('trademarkInfo',trademark)
+      },
+      //平台售卖属性的点击事件
+      attrInfo(attr,attrValue){
+        //["属性ID:属性值:属性名"]
+        // console.log(attr.attrId,attrValue,attr.attrName,);
+        this.$emit("attrInfo",attr,attrValue)
+      }
     }
   }
 </script>
