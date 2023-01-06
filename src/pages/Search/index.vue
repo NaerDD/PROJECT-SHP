@@ -42,7 +42,6 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav"> 
-                
                 <li :class="{active:isOne}" @click="changeOrder('1')">
                   <a>综合<span v-show="isOne" class="iconfont" :class="{'icon-up':isAsc,'icon-down':isDesc}"></span></a>
                 </li>
@@ -99,8 +98,8 @@
               </li>
             </ul>
           </div>
-          <!-- 分页器 -->
-          <Pagination/>
+          <!-- 分页器 测试分页器阶段,这里数据将来需要替换-->
+          <Pagination :pageNo="19" :pageSize="5" :total="91" continues="5"/>
           
         </div>
       </div>
@@ -129,7 +128,7 @@ export default {
         //第几页
         pageNo: 1,
         //每一页展示条数
-        pageSize: 3,
+        pageSize: 5,
         //平台属性的操作
         props: [],
         //品牌
@@ -237,7 +236,7 @@ export default {
     changeOrder(flag){
       //flag形参:它是一个标记 代表用户点的是1还是2
       // console.log(flag);
-      let originOrder = this.searchParams.order;
+      // let originOrder = this.searchParams.order;
       let originFlag = this.searchParams.order.split(":")[0];
       let originSort = this.searchParams.order.split(":")[1];
       //准备一个新的order属性值
@@ -253,7 +252,6 @@ export default {
       this.searchParams.order = newOrder;
       //再次发请求
       this.getData();
-      
     }
   },
   watch: {
