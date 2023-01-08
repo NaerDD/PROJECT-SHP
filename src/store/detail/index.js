@@ -16,7 +16,17 @@ const mutations = {
     state.goodInfo = goodInfo
   }
 };
-const getters = {};
+const getters = {
+  categoryView(state){
+    //比如:state.goodInfo初始状态空对象,空对象的categoryView属性值undefined
+    //当前计算出的categoryView属性值至少是一个空对象,假的报错不会有了
+    return state.goodInfo.categoryView||{};
+  },
+  skuInfo(state){
+    return state.goodInfo.skuInfo||{};
+  },
+
+};
 export default{
   state,
   actions,
