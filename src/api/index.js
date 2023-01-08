@@ -29,3 +29,6 @@ export const reqFloorList = ()=>mockRequests.get('/floor')
 //当前这个函数需不需要接收外部传递参数
 //这个接口 给服务器传递params 至少是一个空对象 否则请求失败
 export const reqGetSearchInfo = (params)=>requests({url:'/list',method:'post',data:params});
+
+//获取产品详情信息的接口 URL: /api/item/{skuId} 方式 get
+export const reqGoodsInfo = (skuId)=>requests({url:`/item/${skuId}`,method:'get'});

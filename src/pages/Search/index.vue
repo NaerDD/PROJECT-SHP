@@ -54,16 +54,13 @@
           <!-- 销售产品列表 -->
           <div class="goods-list">
             <ul class="yui3-g">
-              <li
-                class="yui3-u-1-5"
-                v-for="(good) in goodsList"
-                :key="good.id"
-              >
+              <li class="yui3-u-1-5" v-for="(good) in goodsList" :key="good.id" >
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank">
+                    <!-- 路由跳转的时候记得带ID(params参数) -->
+                    <router-link :to="`/detail/${good.id}`">
                       <img :src="good.defaultImg" />
-                    </a>
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -99,8 +96,7 @@
             </ul>
           </div>
           <!-- 分页器 测试分页器阶段,这里数据将来需要替换-->
-          <Pagination :pageNo="19" :pageSize="5" :total="91" continues="5"/>
-          
+          <Pagination :pageNo="searchParams.pageNo" :pageSize="searchParams.pageSize" :total="total" :continues="5" @getPageNo ="getPageNo"/>
         </div>
       </div>
     </div>
@@ -109,7 +105,7 @@
 
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "Search",
   data() {
@@ -147,7 +143,7 @@ export default {
     this.getData();
   },
   computed: {
-    //mapGetters里面的写法:传递的数组,因为getters计算是没有划分模块[home,search]
+    //mapGetters里面的写法:传递的数组,因为getters计算是没有划分模块[home,search](拿过来的数据 需要修改的数据)
     ...mapGetters(["goodsList"]),
     isOne(){
       return this.searchParams.order.indexOf('1') != -1;
@@ -160,8 +156,11 @@ export default {
     },
     isDesc(){
       return this.searchParams.order.indexOf('desc')!=-1
-    }
-
+    },
+      //获取search模块展示产品一共多少数据
+      ...mapState({
+        total:state=>state.search.searchList.total
+      })
   },
   methods: {
     //向服务器发送请求获取Search模块数据(根据参数不同返回不同的数据进行展示)
@@ -250,6 +249,13 @@ export default {
       }
       //将新的order赋予searchParams
       this.searchParams.order = newOrder;
+      //再次发请求
+      this.getData();
+    },
+    //自定义事件的回调函数---获取当前第几页
+    getPageNo(pageNo){
+      //整理带给服务器的参数
+      this.searchParams.pageNo = pageNo;
       //再次发请求
       this.getData();
     }
