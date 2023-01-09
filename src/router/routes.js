@@ -4,8 +4,15 @@ import Search from '@/pages/Search'
 import Register from '@/pages/Register'
 import Login from '@/pages/Login'
 import Detail from '@/pages/Detail'
+import AddCartSuccess from '@/pages/AddCartSuccess'
 
 export default [
+  {
+    path: "/addcartsuccess",
+    name:'addcartsuccess',
+    component: AddCartSuccess,
+    meta: { show: true }
+  },
   {
     path: "/detail/:skuid",
     component: Detail,

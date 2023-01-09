@@ -92,12 +92,13 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model="skuNum" @change="changeSkuNum"/>
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="mins" @click="skuNum>1?skuNum--:skuNum=1">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <!-- 以前的路由跳转 又a去b 这里在跳转之前,发请求 把你购买的产品的信息通过请求的形势通知服务器 服务器进行相应的存储 -->
+                <a @click="addShopcar">加入购物车</a>
               </div>
             </div>
           </div>
@@ -341,7 +342,12 @@ import Zoom from "./Zoom/Zoom";
 import { mapGetters } from "vuex";
 export default {
   name: "Detail",
-
+  data(){
+    return{
+      //购买产品的个数
+      skuNum:1
+    }
+  },
   components: {
     ImageList,
     Zoom,
@@ -366,8 +372,40 @@ export default {
           item.isChecked = '0';
         })
         //再将点击的a的isChecked=true
-        a.isChecked=1;
-        
+        a.isChecked=1; 
+    },
+    //表单元素修改产品个数
+    changeSkuNum(e){
+      //用户输入进来的文本*1
+      let value = e.target.value *1;
+      //如果用户输入进来的非法,出现NaN或者小于1
+      if(isNaN(value||value<1)){
+        this.skuNum = 1;
+      }else{
+        //不允许小数
+        this.skuNum = parseInt(value);
+      }
+    },
+    //加入购物车的回调函数
+    async addShopcar(){
+      //派发action 将产品加到数据库(通知服务器)
+      // this.$store.dispatch('addOrUpdateShopCart',{skuId:this.$route.params.skuid,skuNum:this.skuNum})
+      //如何判断加入成功还是失败了(返回的数据code=200在仓库当中 我们组件当中并不知道)
+      try {
+        await this.$store.dispatch('addOrUpdateShopCart',
+        {skuId:this.$route.params.
+        skuid,skuNum:this.skuNum});
+          //成功 进行路由跳转
+          //在跳转的时候 还要将产品的信息带过去 带给下一级的路由组件
+          //一些简单的数据skuNum,通过query形势给路由组件传递过去
+          //产品信息的数据 比较复杂[skuInfo] ,通过会话存储(不持久化,会话结束再消失)
+          //本地存储|会话存储,一般存储的是字符串
+          sessionStorage.setItem("SKUINFO",JSON.stringify(this.skuInfo))
+          this.$router.push({name:'addcartsuccess',query:{skuNum:this.skuNum}});
+      } catch (error) {
+        alert(error.message);
+      }
+      //这里返回的一定是一个promise对象,因为 async异步await等待返回结果 一定会等待完成 结果要么成功|要么失败
     }
   }
 };
