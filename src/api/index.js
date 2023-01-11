@@ -51,3 +51,18 @@ export const reqGetCode = (phone)=>requests({url:`/user/passport/sendCode/${phon
 
 //注册
 export const reqUserRegister = (data)=>requests({url:'/user/passport/register',data,method:'post'});
+
+//登陆
+export const reqUserLogin = (data)=>requests({url:'/user/passport/login',data,method:'post'});
+
+//获取用户信息 [带着用户的token向服务器要用户信息]
+export const reqUserInfo = ()=>requests({url:'/user/passport/auth/getUserInfo',method:'get'});
+
+//注销
+export const reqLogout = ()=>requests({url:'/user/passport/logout',method:'get'});
+
+//获取用户地址信息
+export const reqAddressInfo = ()=>requests({url:'/user/userAddress/auth/findUserAddressList',method:'get'});
+
+//获取商品清单
+export const reqOrderInfo = ()=>requests({url:'/order/auth/trade',method:'get'});

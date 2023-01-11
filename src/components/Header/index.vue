@@ -6,12 +6,19 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <!-- 没有用户名:未登录 -->
+          <p v-if="!userName">
             <span>请</span>
             <!-- 声明式导航:务必要有to属性 -->
             <router-link to="/login">登录</router-link>
             <router-link  class="register" to="/register">免费注册</router-link>
           </p>
+          <!-- 有用户名:已登陆 -->
+          <p v-else>
+            <a>{{userName}}</a>
+            <a class="register" @click="logout">注销</a>
+          </p>
+
         </div>
         <div class="typeList">
           <a href="###">我的订单</a>
@@ -96,6 +103,19 @@ export default {
 
 
     },
+    //注销的方法
+    logout(){
+      //1发请求 通知服务器推出登陆[清除token]
+      //2清除项目当中的数据[userInfo,password]
+      try {
+        //如果推出成功
+        this.$store.dispatch('userLogout');
+        //回到首页
+        this.$router.push('/home');
+      } catch (error) {
+        
+      }
+    }
   },
   mounted() {
     //通过全局事件总线清除关键字
@@ -103,6 +123,11 @@ export default {
       this.keyword = "";
     })
   },
+  computed:{
+    userName(){
+      return this.$store.state.user.userInfo.name
+    }
+  }
 };
 </script>
 
