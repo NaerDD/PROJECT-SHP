@@ -43,6 +43,7 @@ let router = new VueRouter({
     return {y:0}
   },
 });
+//全局首位：前置首位(在路由跳转之间进行判断)
 router.beforeEach(async (to,from,next)=>{
   //to可以获取到你要跳转到那个路由信息
   //from可以获取到你从哪个路由来
