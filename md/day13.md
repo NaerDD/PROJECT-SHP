@@ -54,3 +54,31 @@ productionSourceMap:false
 2设置安全组,让服务器一些端口号打开
 
 3利用xshell工具登陆服务器
+
+7.6 nginx?
+1为什么访问服务器IP地址就可以访问到咱们的项目?---配置一些东西
+刚刚在服务器上=>/root/jch/www/shangpinghui/dist
+
+2项目的数据来自于http://39.98.123.211
+
+3反向代理
+1:xshell进入根目录/etc
+2:进入etc目录下的nginx
+3:没有安装nginx只有4.5 个文件 ||安装nignx :yum install nginx
+4:安装完后,nginx目录下多了个nginx.conf文件,在这个文件中进行配置
+5.vim nginx.conf进行编辑,主要添加如下两项
+
+解决第一个问题:
+location / {
+  root /root/jch/www/shangpinghui/dist;
+  index index.html;
+  try_files $uri $uri/ /index.html;
+}
+解决第二个问题:资源服务器
+location /api {
+  proxy_pass http://182.92.128.115;
+}
+
+nignx服务器运行
+service nginx start
+
