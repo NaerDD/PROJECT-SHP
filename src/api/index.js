@@ -37,7 +37,6 @@ export const reqGoodsInfo = (skuId)=>requests({url:`/item/${skuId}`,method:'get'
 export const reqAddOrUpdateShopCart = (skuId,skuNum)=>requests({url:`/cart/addToCart/${skuId}/${skuNum}`,method:'post'});
 
 //获取购物车列表数据接口
-//URl:/api/cart/cartList get
 export const reqCartList = ()=>requests({url:'/cart/cartList',method:'get'});
 
 //删除购物车产品的接口
@@ -75,3 +74,6 @@ export const reqPayInfo = (orderId)=>requests({url:`/payment/weixin/createNative
 
 //获取支付订单状态
 export const reqPayStatus = (orderId)=>requests({url:`/payment/weixin/queryPayStatus/${orderId}`,method:'get'});
+
+//获取我的订单列表
+export const reqMyOrderList = (page,limit)=>requests({url:`/order/auth/${page}/${limit}`,method:'get'});

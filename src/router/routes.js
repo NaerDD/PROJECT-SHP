@@ -1,6 +1,6 @@
 //引入路由组件
-import Home from '@/pages/Home'
-import Search from '@/pages/Search'
+// import Home from '@/pages/Home'
+// import Search from '@/pages/Search'
 import Register from '@/pages/Register'
 import Login from '@/pages/Login'
 import Detail from '@/pages/Detail'
@@ -9,8 +9,39 @@ import ShopCart from '@/pages/ShopCart'
 import Trade from '@/pages/Trade'
 import Pay from '@/pages/Pay'
 import PaySuccess from '@/pages/PaySuccess'
+import Center from '@/pages/Center'
+//引入二级路由组件
+import MyOrder from '@/pages/Center/myOrder'
+import GroupOrder from '@/pages/Center/groupOrder'
+
+/*
+  路由懒加载
+  当打包构建应用时,js包会变得非常大 影响页面加载
+  把不同路由对应的组件分割成不同的代码块,然后当路由被访问的时候才加载对应组件,这样就更加高效了
+*/
+
 
 export default [
+  {
+    path: "/center",
+    component: Center,
+    meta: { show: true },
+    //二级路由组件
+    children:[
+      {
+        path:'/center',
+        redirect:'/center/myorder',
+      },
+      {
+        path:'myOrder',
+        component:MyOrder,
+      },
+      {
+        path:'groupOrder',
+        component:GroupOrder,
+      }
+    ]
+  },
   {
     path: "/paySuccess",
     component: PaySuccess,
@@ -19,12 +50,30 @@ export default [
   {
     path: "/pay",
     component: Pay,
-    meta: { show: true }
+    meta: { show: true },
+    beforeEnter: (to, from, next) => {
+      //如果从trade而来的放行
+      if(from.path=="/trade"){
+        next();
+      }else{
+        next(false);
+      }
+    }
   },
   {
     path: "/trade",
     component: Trade,
-    meta: { show: true }
+    meta: { show: true },
+    beforeEnter: (to, from, next) => {
+      //去交易页面，必须是从购物车而来
+      if(from.path=="/shopcart"){
+        next();
+      }else{
+        //其他的路由组件而来 从哪来回哪去
+        next(false);
+      }
+    }
+
   },
   {
     path: "/shopcart",
@@ -44,12 +93,12 @@ export default [
   },
   {
     path: "/home",
-    component: Home,
+    component: ()=>import('@/pages/Home'),
     meta: { show: true }
   },
   {
     path: "/search/:keyword?",
-    component: Search,
+    component: ()=>import('@/pages/Search'),
     meta: { show: true },
     name: "search",
     //路由组件能不能传递props数据？ 能

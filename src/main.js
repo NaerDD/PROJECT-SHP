@@ -25,12 +25,27 @@ import "swiper/css/swiper.css";
 
 //统一接口api文件夹里面全部请求函数
 import * as API from '@/api'
+import atm from '@/assets/1.gif'
 
 Vue.config.productionTip = false
 
 //测试
 // import {reqCateGoryList} from '@/api'
 // reqCateGoryList();
+
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload,{
+  //懒加载默认图片
+  loading:atm
+})
+
+//引入自定义插件
+import myPlugins from '@/plugins/myPlugins'
+Vue.use(myPlugins);
+
+//引入表单校验插件
+import "@/plugins/validate";
+
 new Vue({
   render: h => h(App),
   //全局事件总线$bus配置

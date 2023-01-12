@@ -59,7 +59,7 @@
                   <div class="p-img">
                     <!-- 路由跳转的时候记得带ID(params参数) -->
                     <router-link :to="`/detail/${good.id}`">
-                      <img :src="good.defaultImg" />
+                      <img v-lazy="good.defaultImg" />
                     </router-link>
                   </div>
                   <div class="price">
@@ -96,7 +96,12 @@
             </ul>
           </div>
           <!-- 分页器 测试分页器阶段,这里数据将来需要替换-->
-          <Pagination :pageNo="searchParams.pageNo" :pageSize="searchParams.pageSize" :total="total" :continues="5" @getPageNo ="getPageNo"/>
+          <Pagination 
+          :pageNo="searchParams.pageNo" 
+          :pageSize="searchParams.pageSize" 
+          :total="total" 
+          :continues="5" 
+          @getPageNo ="getPageNo"/>
         </div>
       </div>
     </div>
