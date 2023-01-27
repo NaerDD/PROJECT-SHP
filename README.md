@@ -1,4 +1,3 @@
-# 纪录build尚品汇电商项目过程
 ## Build Setup
 
 ```bash
